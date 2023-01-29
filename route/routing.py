@@ -93,8 +93,7 @@ def blog_single_route():
 
 @param.route('/blog_single/photo', methods=['GET'])
 def blog_single_photo_route():
-    req: dict = request.json
-    url = req.get('url')
+    url: str = request.args.get('url')
     print(url)
     zip_rs = blog_single_photo.download(url)
     return send_file(zip_rs.zip_file, download_name=zip_rs.file_name, as_attachment=True)
