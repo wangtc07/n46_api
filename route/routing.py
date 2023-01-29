@@ -5,7 +5,7 @@ import zipfile
 from io import BytesIO
 
 import requests
-from flask import Blueprint, request, make_response, send_file, Response
+from flask import Blueprint, request, make_response, send_file, Response, jsonify
 
 from service import blog_single, blog_single_photo
 
@@ -28,8 +28,7 @@ def post_route():
 
 @param.route('/get', methods=['GET'])
 def get_route():
-    req: dict = request.json
-    url = req.get('url')
+    url: str = request.args.get('url')
     print(url)
     return url
 
@@ -37,7 +36,7 @@ def get_route():
 # 圖片直接顯示
 @param.route('/img', methods=['GET'])
 def down_img():
-    img_data = open(os.path.join('./', '矢久保美緒 blog 200427-1.jpg'), 'rb').read()
+    img_data = open(os.path.join('./', 'test.jpg'), 'rb').read()
     print(type(img_data))  # bytes
     response = make_response(img_data)
     response.headers['Content-Type'] = 'image/png'
@@ -47,8 +46,8 @@ def down_img():
 # 直接下載
 @param.route('/img2', methods=['GET'])
 def down_img2():
-    return send_file('./矢久保美緒 blog 200427-1.jpg', as_attachment=True,
-                     download_name='矢久保美緒 blog 200427-1.jpg')
+    return send_file('test.jpg', as_attachment=True,
+                     download_name='test.jpg')
 
 
 @param.route('/img3', methods=['GET'])
